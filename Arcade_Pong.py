@@ -91,17 +91,20 @@ juego = True
 while juego:
     ventana.update()
 
-    # Movimiento de la pelota
+    # Iniciamos el movimiento de la pelota
     pelota.setx(pelota.xcor() + pelota.dx)
     pelota.sety(pelota.ycor() + pelota.dy)
 
-    # Revisa los bordes de la pantalla
+    # Revisamos las colisiones con los bordes de la pantalla
+    ## Si pega contra un borde del eje y rebotará
     if pelota.ycor() > 290:
         pelota.dy *= -1
 
     if pelota.ycor() < -290:
         pelota.dy *= -1
-
+    
+    ## Si pega contra un borde del eje x la pelota volvera el centro
+    ## y anotará un punto en marcador para el jugador correspondiente
     if pelota.xcor() > 390:
         scoreA+=1
         marcador.clear()
@@ -116,13 +119,14 @@ while juego:
         pelota.goto(0, 0)
         pelota.dx *= -1
 
-    # Revisa colisiones con las paletas
+    # Revisamos las colisiones con las paletas
     if (pelota.xcor() > 340) and (pelota.xcor() < 350)  and (pelota.ycor() < paleta_derecha.ycor() + 50 and pelota.ycor() > paleta_derecha.ycor() - 50):
         pelota.dx *= -1
 
     elif (pelota.xcor() < -340) and (pelota.xcor() > -350)  and (pelota.ycor() < paleta_izquierda.ycor() + 50 and pelota.ycor() > paleta_izquierda.ycor() - 50):
         pelota.dx *= -1
     
+    #Creamos las condicioones para determinar al ganador del juego
     elif scoreA == 3:
         marcador.clear()
         marcador.goto(0,100)
